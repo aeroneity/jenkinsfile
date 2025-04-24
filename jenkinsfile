@@ -2,46 +2,50 @@ pipeline {
     agent any
 
     environment {
-        DIRECTORY_PATH = '/desktop'
+        DIRECTORY_PATH = '/var/lib/jenkins/workspace/my-app'
         TESTING_ENVIRONMENT = 'staging'
-        PRODUCTION_ENVIRONMENT = 'Charlotte'
+        PRODUCTION_ENVIRONMENT = 'CharlotteNolan'   
     }
 
     stages {
         stage('Build') {
             steps {
-                echo "Building code from ${env.DIRECTORY_PATH}..."
+                echo "Fetch the source code from the directory path specified by the environment variable: ${env.DIRECTORY_PATH}"
+                echo "Compile the code and generate any necessary artefacts"
             }
         }
 
         stage('Test') {
             steps {
-                echo "Testing in ${env.TESTING_ENVIRONMENT}..."
+                echo "Unit tests"
+                echo "Integration tests"
             }
         }
 
         stage('Code Quality Check') {
             steps {
-                echo 'Running code quality tools...'
+                echo "Check the quality of the code"
             }
         }
 
         stage('Deploy') {
             steps {
-                echo "Deploying to ${env.TESTING_ENVIRONMENT}..."
+                echo "Deploy the application to a testing environment specified by the environment variable: ${env.TESTING_ENVIRONMENT}"
             }
         }
 
         stage('Approval') {
             steps {
-                input message: "Deploy to ${env.PRODUCTION_ENVIRONMENT}?"
+                echo "Waiting for manual approval simulation..."
+                sleep(time: 10, unit: 'SECONDS')
             }
         }
 
         stage('Deploy to Production') {
             steps {
-                echo "Deploying to ${env.PRODUCTION_ENVIRONMENT}..."
+                echo "Deploying the code to the production environment: ${env.PRODUCTION_ENVIRONMENT}"
             }
         }
     }
 }
+
